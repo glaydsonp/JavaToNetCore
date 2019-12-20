@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using netcoremvc.Models;
+using netcoremvc.Repositories;
 
 namespace netcoremvc.Controllers
 {
@@ -16,16 +17,16 @@ namespace netcoremvc.Controllers
         private readonly AuthorContext _context;
         private readonly AuthorRepository _repository;
 
-        public AuthorsController(AuthorContext context)
+        public AuthorsController(AuthorRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Authors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-            return await _context.Authors.ToListAsync();
+            return await _repository.Get();
         }
 
         // GET: api/Authors/5

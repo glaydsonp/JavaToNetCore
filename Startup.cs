@@ -11,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using netcoremvc.Data;
 using netcoremvc.Models;
+using netcoremvc.Repositories;
 
 namespace netcoremvc
 {
@@ -31,6 +33,8 @@ namespace netcoremvc
             services.AddDbContext<BookContext>(opt => opt.UseInMemoryDatabase("BookList"));
             services.AddDbContext<AuthorContext>(opt => opt.UseInMemoryDatabase("AuthorList"));
             services.AddDbContext<PublisherContext>(opt => opt.UseInMemoryDatabase("PublisherList"));
+            StoreDataContext context = new StoreDataContext();
+            services.AddSingleton<AuthorRepository>(new AuthorRepository(context));
             services.AddControllers();
         }
 

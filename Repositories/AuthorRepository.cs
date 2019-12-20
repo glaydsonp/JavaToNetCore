@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using netcoremvc.Data;
 using netcoremvc.Models;
@@ -15,6 +17,10 @@ namespace netcoremvc.Repositories
             _context = context;
         }
 
+        public AuthorRepository()
+        {
+        }
+
         // public IEnumerable<ListProductViewModel> Get()
         // {
         //     return _context.Products.Include(x => x.Category).Select(x => new ListProductViewModel
@@ -27,14 +33,14 @@ namespace netcoremvc.Repositories
         //     }).AsNoTracking().ToList();
         // }
 
-        public IEnumerable<Author> Get()
+        public async Task<ActionResult<IEnumerable<Author>>> Get()
         {
-            return _context.Authors.Select(x => new Author
+            return await _context.Authors.Select(x => new Author
             {
                 Id = x.Id,
                 LName = x.LName,
                 Fname = x.Fname,
-            }).AsNoTracking().ToList();
+            }).AsNoTracking().ToListAsync();
         }
 
         public Author Get(int id)
