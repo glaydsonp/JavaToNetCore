@@ -35,6 +35,8 @@ namespace netcoremvc
             services.AddDbContext<PublisherContext>(opt => opt.UseInMemoryDatabase("PublisherList"));
             StoreDataContext context = new StoreDataContext();
             services.AddSingleton<AuthorRepository>(new AuthorRepository(context));
+            services.AddSingleton<BookRepository>(new BookRepository(context));
+            services.AddSingleton<PublisherRepository>(new PublisherRepository(context));
             services.AddControllers();
         }
 

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using netcoremvc.Data;
 using netcoremvc.Models;
@@ -27,9 +29,9 @@ namespace netcoremvc.Repositories
         //     }).AsNoTracking().ToList();
         // }
 
-        public IEnumerable<Book> Get()
+        public async Task<ActionResult<IEnumerable<Book>>> Get()
         {
-            return _context.Books.Include(x => x.Publisher).Select(x => new Book
+            return await _context.Books.Include(x => x.Publisher).Select(x => new Book
             {
                 Id = x.Id,
                 Isbn = x.Isbn,
@@ -37,12 +39,12 @@ namespace netcoremvc.Repositories
                 PublisherId = x.PublisherId,
                 Price = x.Price,
                 Publisher = x.Publisher
-            }).AsNoTracking().ToList();
+            }).AsNoTracking().ToListAsync();
         }
 
-        public Book Get(int id)
+        public async Task<Book> Get(int id)
         {
-            return _context.Books.AsNoTracking().Where(x => x.Id == id).FirstOrDefault();
+            return await _context.Books.AsNoTracking().Where(x => x.Id == id).FirstOrDefaultAsync();
         }
         public Book Find(int id)
         {

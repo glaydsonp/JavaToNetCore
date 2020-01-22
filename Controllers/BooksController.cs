@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using netcoremvc.Models;
+using netcoremvc.Repositories;
 
 namespace netcoremvc.Controllers
 {
@@ -14,17 +15,18 @@ namespace netcoremvc.Controllers
     public class BooksController : ControllerBase
     {
         private readonly BookContext _context;
+        private readonly BookRepository _repository;
 
-        public BooksController(BookContext context)
+        public BooksController(BookRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Books
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
-            return await _context.Books.ToListAsync();
+            return await _repository.Get();
         }
 
         // GET: api/Books/5

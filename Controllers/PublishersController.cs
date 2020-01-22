@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using netcoremvc.Models;
+using netcoremvc.Repositories;
 
 namespace netcoremvc.Controllers
 {
@@ -14,10 +13,11 @@ namespace netcoremvc.Controllers
     public class PublishersController : ControllerBase
     {
         private readonly PublisherContext _context;
+        private readonly PublisherRepository _repository;
 
-        public PublishersController(PublisherContext context)
+        public PublishersController(PublisherRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Publishers
